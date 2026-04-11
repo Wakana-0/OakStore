@@ -9,10 +9,10 @@ jobs:
 
     steps:
       - name: 拉取代码
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 配置Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11.9'
 
@@ -25,7 +25,7 @@ jobs:
         run: pyinstaller --noconsole --name OakStore main.py
 
       - name: 上传
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Windows-amd64
           path: dist/*.exe
