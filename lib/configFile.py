@@ -10,4 +10,8 @@ class Initialization:
         初始化主配置文件 confg.json
         :return: bool
         """
+        try:
+            pass
+        except Exception:
+            pass
         return True
