@@ -36,10 +36,10 @@ def APPInfo(path):
     :return: 读取成功时返回 data，失败时返回 None
     """
     try:
-        with open(path, 'r', encoding='utf-8') as file:
+        with open(f"{path}/APPInfo.json", 'r', encoding='utf-8') as file:
             data = json.load(file)
 
-        print("✓ 文件读取成功")
+        logger.info(f"成功读取 {path}/APPInfo.json \n{data}")
         return data
 
     except FileNotFoundError:
@@ -50,6 +50,14 @@ def APPInfo(path):
     except Exception as e:
         print(f"读取文件时出错，因为 {e}")
         return None
+
+def installAPP(packagePath, installPath):
+    """
+    安装应用
+    :param packagePath: 应用包位置
+    :param installPath: 安装位置
+    :return: bool
+    """
 
 
 

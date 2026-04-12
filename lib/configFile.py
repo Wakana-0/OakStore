@@ -63,4 +63,35 @@ class Initialization:
         except OSError as e:
             logger.error(f"初始化配置文件失败，系统错误: {e}")
             return False
-        return True
+
+
+class jsonFile:
+    def readJson(self, path, keyPath):
+        """
+        从JSON文件读取指定路径的值
+        路径格式：类似 '/data/value/main'，以 '/' 分隔
+        """
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        parts = path.lstrip('/').split('/')    # 解析路径
+
+        for part in parts:
+            if part == '':
+                continue
+            if isinstance(data, dict):
+                if part not in data:
+                    raise KeyError(f"键 '{part}' 不存在")
+                data = data[part]
+            elif isinstance(data, list):
+                try:
+                    idx = int(part)
+                    data = data[idx]
+                except ValueError:
+                    raise KeyError(f"列表索引必须是整数，得到 '{part}'")
+                except IndexError:
+                    raise IndexError(f"列表索引 {idx} 超出范围")
+            else:
+                raise TypeError(f"无法在类型 {type(data).__name__} 上访问 '{part}'")
+
+        return data
