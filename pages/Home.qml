@@ -8,18 +8,35 @@ FluentPage {
     title: qsTr("主页")
 
     Column {
-        Layout.fillWidth: true
+        width: parent.width
         spacing: 3
 
         Text {
             typography: Typography.BodyStrong
-            text: qsTr("类型1")
+            text: qsTr("优质应用")
+            font.pixelSize: 20
         }
-        InfoClip {
-            iconSource: "./assets/icon.png"
-            title: "RinUI"
-            desc: "A Fluent Design System implementation for Qt Quick"
-            url: "https://mobile.yangkeduo.com/arbiter_checkered_indite.html?F673716A21=TxXlj7TTpB2xu&modulate_artless_bridle=X2QpduIKvkt9jOUYVRLWzg%2C%2C&campaign=cutprice&sub_campaign=mtpgifts&_pdd_fs=1&_ex_sid=mtpgifts_scan1&share_group_sn=AXFOQ5DZYJJLKJUHMRODU2PWIM_GEXDA40AFE38319E93222&pearl_share_uin=AXFOQ5DZYJJLKJUHMRODU2PWIM_GEXDA&trace_id=exr-9rf-0g6&__wls_rt=1&__wls_lt=1&__wls_fm=n"
+
+        Grid {
+            width: parent.width
+            columns: Math.floor(width / (340 + 6))
+            rowSpacing: 12
+            columnSpacing: 12
+            layoutDirection: GridLayout.LeftToRight
+
+
+            InfoClip {
+                iconSource: "../assets/img/Application2.png"
+                title: "Class Widgets 2"
+                desc: "新，是理所当然的不同。"
+                page: "../pages/AppManagement.qml"
+            }
+            InfoClip {
+                iconSource: "../assets/img/Application2.png"
+                title: "RinUI 官网"
+                desc: "A Fluent Design System implementation for Qt Quick"
+                url: "https://ui.rinlit.cn/zh/"   // 外部链接应使用 url 属性
+            }
         }
         
         //GridLayout {

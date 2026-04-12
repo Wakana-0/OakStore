@@ -14,6 +14,26 @@ FluentPage {
             text: qsTr("About")
         }
 
+        SettingCard {
+            width: parent.width
+            title: qsTr("窗口背景效果")
+            description: qsTr("更改窗口背景效果，部分效果仅支持 Windows11。")
+            icon.name: "ic_fluent_square_hint_sparkles_20_regular"
+
+            ComboBox {
+                property var data: ["mica", "acrylic", "none"]
+                model: ListModel {
+                    ListElement { text: qsTr("云母") }
+                    ListElement { text: qsTr("亚克力") }
+                    ListElement { text: qsTr("无") }
+                }
+                currentIndex: data.indexOf(Theme.getBackdropEffect())
+                onCurrentIndexChanged: {
+                    Theme.setBackdropEffect(data[currentIndex])
+                }
+            }
+        }
+
         SettingExpander {
             width: parent.width
             title: qsTr("OakStore")
