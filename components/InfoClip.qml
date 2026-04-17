@@ -3,29 +3,12 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 2.15
 import RinUI
 
-Clip {
-    id: root
+Clip{
     width: 340
     height: 88
     radius: 12
 
-    property string url: modelData?.url ?? ""
-    property string page: modelData?.page ?? ""
-    property string iconSource: modelData?.icon ?? null
-    property string title: modelData?.title ?? ""
-    property string desc: modelData?.desc ?? ""
-    property bool isNew: modelData?.added ?? false
-    property bool isUpdated: modelData?.updated ?? false
-
-    InfoBadge {
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.margins: 12
-        width: 8
-        height: 8
-        text: "·"
-        visible: root.isNew || root.isUpdated
-    }
+    property var modelData
 
     RowLayout {
         anchors.fill: parent
@@ -34,8 +17,9 @@ Clip {
         spacing: 16
 
         Image {
+        // TODO: 完善应用图标设置
             Layout.alignment: Qt.AlignVCenter
-            source: root.iconSource
+            source: modelData.icon
             fillMode: Image.PreserveAspectFit
             Layout.preferredWidth: 40
             Layout.preferredHeight: 40
@@ -45,21 +29,41 @@ Clip {
             Layout.alignment: Qt.AlignVCenter
             spacing: 3
 
-            Text {
+            RowLayout {
                 width: parent.width
-                typography: Typography.BodyStrong
-                font.pixelSize: 16
-                text: root.title
+
+                Text {
+                    width: parent.width
+                    typography: Typography.BodyStrong
+                    font.pixelSize: 16
+                    text: modelData.name
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    icon.name: "ic_fluent_arrow_download_20_filled"
+                    text: qsTr("下载")
+                }
             }
+            // 简介 desc
             Text {
                 width: parent.width
+                text: modelData.desc
+                elide: Text.ElideRight
+                maximumLineCount: 1
+
                 typography: Typography.Caption
                 color: Theme.currentTheme.colors.textSecondaryColor
-                text: root.desc
+                // 宽度控制
+                Layout.preferredWidth: font.pixelSize * 0.6 * 20
             }
         }
     }
     onClicked: dialog.open()
+    // 点击后打开对话框显示详细信息
     Dialog {
         id: dialog
         modal: true
@@ -73,7 +77,7 @@ Clip {
 
             Image {
                 Layout.alignment: Qt.AlignVCenter
-                source: root.iconSource
+                source: modelData.icon
                 fillMode: Image.PreserveAspectFit
                 Layout.preferredWidth: 40
                 Layout.preferredHeight: 40
@@ -87,19 +91,25 @@ Clip {
                     width: parent.width
                     typography: Typography.BodyStrong
                     font.pixelSize: 16
-                    text: root.title
+                    text: modelData.name
                 }
-                Text {
+
+                RowLayout {
                     width: parent.width
-                    typography: Typography.Caption
-                    color: Theme.currentTheme.colors.textSecondaryColor
-                    text: root.desc
+
+                    Text {
+                        Layout.fillWidth: true
+                        horizontalAlignment: Text.AlignLeft
+                        color: "gray"
+                        font.pixelSize: 12
+                        text: modelData.developer + " | v" + modelData.version
+                    }
                 }
             }
         }
         Text {
             Layout.fillWidth: true
-            text: qsTr("Class Widgets 2 是新一代的电子化课程表展示工具，基于比前代更新的架构与设计语言重写。 相比 Class Widgets 1 ，本项目在设计、交互、功能等方面将全面提升。")
+            text: modelData.desc
         }
 
     }

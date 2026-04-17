@@ -1,0 +1,30 @@
+{
+  "last_updated": "2026-04-18",
+  "total_count": 2,
+  "apps": [
+    {
+      "app_id": "com.rin.store.app1",
+      "name": "Class Widgets 2",
+      "developer": "RinLit",
+      "version": "2.0.0",
+      "icon": "../assets/img/Application2.png",
+      "desc": "在教室的一体机上华丽地显示课表"
+    },
+    {
+      "app_id": "com.rin.store.app2",
+      "name": "RinUI 官网",
+      "developer": "RinLit",
+      "version": "1.0.0",
+      "icon": "../assets/img/Application2.png",
+      "desc": "Fluent风格的UI组件库，提供丰富的组件和工具，帮助开发者快速构建现代化应用。"
+    },
+    {
+      "app_id": "com.orlyn.teachconnect.app",
+      "name": "师室互联",
+      "developer": "Orlyn",
+      "version": "1.0.0",
+      "icon": "../assets/img/Application2.png",
+      "desc": "连接教室与教师"
+    }
+  ]
+}
