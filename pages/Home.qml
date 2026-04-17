@@ -9,7 +9,7 @@ FluentPage {
 
     Column {
         width: parent.width
-        spacing: 12 // 增加一点间距，美观一些
+        spacing: 12 // 间距
 
         Text {
             typography: Typography.BodyStrong
@@ -19,23 +19,18 @@ FluentPage {
 
         Grid {
             width: parent.width
-            // 保持你原有的自动计算列数逻辑
+            // 列数自动计算
             columns: Math.floor(width / (340 + 6))
             rowSpacing: 12
             columnSpacing: 12
             layoutDirection: GridLayout.LeftToRight
 
-            // 【关键修改】使用 Repeater 动态生成
+            // 使用 Repeater 动态生成卡片
             Repeater {
-                // 绑定 Python 传过来的列表
                 model: appStoreProvider.appList
 
                 delegate: InfoClip {
-                    // 将整行数据传给 InfoClip 内部的 property var modelData
                     modelData: model.modelData
-
-                    // 如果你需要保留原有的某些手动设置，可以在这里逻辑映射
-                    // 但建议全部走 JSON 数据驱动
                 }
             }
         }
@@ -45,7 +40,6 @@ FluentPage {
             text: qsTr("新应用")
         }
 
-        // 可以在这里如法炮制其他的 Repeater
         Text {
             typography: Typography.BodyStrong
             text: qsTr("类型3")

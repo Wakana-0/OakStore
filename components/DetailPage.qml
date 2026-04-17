@@ -3,7 +3,6 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 2.15
 import RinUI
 
-// TODO: 完成应用详情页面
 FluentPage {
     title: qsTr("应用详情")
 
@@ -38,10 +37,10 @@ FluentPage {
                     wrapMode: Text.Wrap
                 }
 
-                // 可以添加更多的详细信息，如版本、开发者等
+                // 可加入版本、开发者等信息
             }
         }
 
-        // 可以在这里添加更多的组件，如安装按钮、截图等
+        // 可添加安装按钮、截图等
     }
 }
