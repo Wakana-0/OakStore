@@ -6,8 +6,13 @@ import time
 
 def download(url, savePath="./Download", speed=0, progress_callback=None):
     """
-    下载文件，支持进度回调和限速。
-    返回 True/False 表示成功与否。
+    下载文件
+    Args:
+        url: 下载链接
+        savePath: 保存位置，如：C:\Download；默认./Download
+        speed: 下载限速（KB/S）；默认0（不限速）
+    Returns:
+        bool: 下载成功返回True，失败返回False
     """
     save_dir = Path(savePath)
     save_dir.mkdir(parents=True, exist_ok=True)
@@ -24,6 +29,10 @@ def download(url, savePath="./Download", speed=0, progress_callback=None):
         response.raise_for_status()
 
         total_size = int(response.headers.get('content-length', 0))
+        if total_size > 0:
+            logger.info(f"文件大小: {total_size / 1024:.2f} KB ({total_size / (1024 * 1024):.2f} MB)")
+        else:
+            logger.warning("无法获取文件大小")
         downloaded = 0
         start_time = time.time()
         chunk_size = 8192
@@ -45,10 +54,24 @@ def download(url, savePath="./Download", speed=0, progress_callback=None):
                     if elapsed < expected_time:
                         time.sleep(expected_time - elapsed)
 
-        logger.success(f"文件已存至: {filepath}")
+                # 输出进度日志
+                current_time = time.time()
+                if current_time - last_log_time >= 1:
+                    if total_size > 0:
+                        progress = (downloaded / total_size) * 100
+                        speed_bps = downloaded / (current_time - start_time) / 1024  # KB/s
+                        logger.info(f"下载进度: {progress:.1f}% ({downloaded / 1024:.1f} KB / {total_size / 1024:.1f} KB) 速度: {speed_bps:.1f} KB/s")
+                    else:
+                        logger.info(f"已下载: {downloaded / 1024:.1f} KB")
+                    last_log_time = current_time
+
+        elapsed_time = time.time() - start_time
+        avg_speed = downloaded / elapsed_time / 1024 if elapsed_time > 0 else 0
 
         if progress_callback:
             progress_callback(100)
+
+        logger.info(f"下载完成，文件名: {filename}, 大小: {downloaded / 1024:.2f} KB, 耗时: {elapsed_time:.2f}秒, 平均速度: {avg_speed:.2f} KB/s")
 
         return True
 
