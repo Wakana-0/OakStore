@@ -4,9 +4,16 @@ from loguru import logger
 
 
 class Initialization:
-    """初始化配置目录与默认配置文件"""
+    """
+    初始化配置目录与默认配置文件
+    """
 
     def __init__(self, workDir=None, configSubdir='config'):
+        """
+        初始化配置类
+        :param workDir: 工作目录，默认为当前目录
+        :param configSubdir: 配置文件的子目录名称，默认 config
+        """
         # 工作目录，默认当前目录
         if workDir is None:
             self.workDir = pathlib.Path.cwd()
@@ -20,7 +27,10 @@ class Initialization:
         logger.info(f"配置目录: {self.configDir}")
 
     def initConfig(self):
-        """创建默认的 config.json，返回是否成功"""
+        """
+        初始化主配置文件
+        :return: bool
+        """
         try:
             self.configDir.mkdir(parents=True, exist_ok=True)
             configPath = self.configDir / "config.json"
@@ -51,7 +61,10 @@ class Initialization:
 
 class jsonFile:
     def readJson(self, file_path, keyPath):
-        """按 '/' 分级读取 JSON 中的指定字段。"""
+        """
+        从JSON文件读取指定路径的值
+        路径格式：类似 '/data/value/main'，以 '/' 分隔
+        """
         with open(file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
 
